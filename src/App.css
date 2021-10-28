@@ -1,38 +1,110 @@
-.App {
-  text-align: center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: sans-serif;
+}
+/* -------------Main Wrapper in flex---------- */
+#main-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+/* Styling for the right items list */
+.summary-head {
+    font-size: 24px;
+    font-weight: 100;
+    margin: 50px 0 0 5px;
+}
+table {
+    width: 80vmin;
+    text-align: left;
+    margin: 10px;
+    max-width: 700px;
+    min-width: 300px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+thead {
+    background-color: rgb(160, 214, 11);
+    box-shadow: 0px -0.3px 0px 2px rgb(187, 186, 186);
+    height: 40px;
+}
+thead .th-item {
+    padding: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+td {
+    font-size: 14px;
+    padding: 2px 0;
+    margin: 5px 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+td:nth-child(2),
+td:nth-child(3),
+thead th:nth-child(2),
+thead th:nth-child(3) {
+    text-align: center;
+}
+tbody .main-item-name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 46px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 7px -4px, -1px 0px 5px -3px;
+}
+tbody .main-item-name img {
+    margin: 0 4px;
+    width: 40px;
+    height: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+tbody .name {
+    margin: 0 0 0 10px;
+}
+.delete-btn {
+    position: absolute;
+    right: 0px;
+    padding: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* quantity part */
+td .nos-item {
+    display: inline-block;
+    width: 40px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 10px;
+    box-shadow: inset 0 0 4px -2.5px;
+}
+.minus-item,
+.plus-item {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Checkout box */
+.checkout-box {
+    width: 300px;
+    border: 2px solid rgba(214, 208, 208, 0.63);
+    height: 200px;
+    margin: 87px 0 50px 0;
+    padding: 20px;
+    position: relative;
+}
+.checkout-box > div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.ch-total {
+    font-size: 19px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    padding: 10px 20px;
+    background-color: rgb(228, 224, 224);
 }
