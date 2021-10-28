@@ -1,8 +1,11 @@
-import React from "react";
-import { data } from "../../data.json";
+import { useContext } from "react";
+
+import { ItemsContext } from "../../DataContext";
 
 const Item = () => {
-    return data.map((e) => {
+    const { state, dispatch } = useContext(ItemsContext);
+
+    return state.data.map((e) => {
         return (
             <tr key={e.id}>
                 <td className="main-item-name">
@@ -13,11 +16,21 @@ const Item = () => {
                     </span>
                 </td>
                 <td>
-                    <span className="minus-item">
+                    <span
+                        className="minus-item"
+                        onClick={() =>
+                            dispatch({ type: "DECREMENT", id: e.id })
+                        }
+                    >
                         <i className="fa fa-minus"></i>
                     </span>
-                    <span className="nos-item">{1}</span>
-                    <span className="plus-item">
+                    <span className="nos-item">{e.qty}</span>
+                    <span
+                        className="plus-item"
+                        onClick={() =>
+                            dispatch({ type: "INCREMENT", id: e.id })
+                        }
+                    >
                         <i className="fa fa-plus"></i>
                     </span>
                 </td>
