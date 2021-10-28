@@ -11,7 +11,10 @@ const Item = () => {
                 <td className="main-item-name">
                     <img src={e.img_url} alt="item-img" />
                     <span className="name">{e.name}</span>
-                    <span className="delete-btn">
+                    <span
+                        className="delete-btn"
+                        onClick={() => dispatch({ type: "DELETE", id: e.id })}
+                    >
                         <i className="fa fa-trash-alt"></i>
                     </span>
                 </td>
