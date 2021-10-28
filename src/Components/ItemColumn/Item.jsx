@@ -13,7 +13,17 @@ const Item = () => {
                     <span className="name">{e.name}</span>
                     <span
                         className="delete-btn"
-                        onClick={() => dispatch({ type: "DELETE", id: e.id })}
+                        onClick={() => {
+                            dispatch({ type: "NOTIFY", show: false });
+                            dispatch({
+                                type: "POPUP",
+                                payload: {
+                                    id: e.id,
+                                    name: e.name,
+                                    show: true,
+                                },
+                            });
+                        }}
                     >
                         <i className="fa fa-trash-alt"></i>
                     </span>
@@ -37,7 +47,7 @@ const Item = () => {
                         <i className="fa fa-plus"></i>
                     </span>
                 </td>
-                <td>${e.price}</td>
+                <td>${e.price * e.qty}</td>
             </tr>
         );
     });

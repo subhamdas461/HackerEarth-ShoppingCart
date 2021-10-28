@@ -1,6 +1,6 @@
 import "./App.css";
-import Checkout from "./Components/Checkout/Checkout";
 
+import Checkout from "./Components/Checkout/Checkout";
 import Main from "./Components/ItemColumn/Main";
 import DataContext from "./DataContext";
 

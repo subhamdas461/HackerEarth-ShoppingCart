@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 import { data } from "./data.json";
 export const ItemsContext = createContext();
 
-const reducer = (state, { type, id }) => {
+const reducer = (state, { type, id, payload, show }) => {
     switch (type) {
         case "INCREMENT": {
             let newAddItem = state.data.map((e) => {
@@ -44,12 +44,24 @@ const reducer = (state, { type, id }) => {
                 grandTotal: initSum - (disSum + typeDisSum),
             };
         }
+
+        case "POPUP": {
+            return {
+                ...state,
+                popup: payload.show,
+                deleteId: payload.id,
+                deleteName: payload.name,
+            };
+        }
+
         case "DELETE": {
-            console.log("DELETE : ", id);
             let newList = state.data.filter((e) => {
                 return e.id !== id;
             });
-            return { ...state, data: newList };
+            return { ...state, data: newList, popup: false };
+        }
+        case "NOTIFY": {
+            return { ...state, notify: show };
         }
         default:
             return state;
@@ -66,6 +78,10 @@ const DataContext = ({ children }) => {
         priceDiscount: 0,
         typeDiscount: 0,
         grandTotal: 0,
+        popup: false,
+        deleteId: null,
+        deleteName: null,
+        notify: false,
     };
 
     const [state, dispatch] = useReducer(reducer, initialState);

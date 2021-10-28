@@ -7,6 +7,7 @@ const Checkout = () => {
         state;
     useEffect(() => {
         dispatch({ type: "ADD_PRICE" });
+        // eslint-disable-next-line
     }, [data]);
 
     return (

@@ -1,13 +1,28 @@
-import { useContext } from "react";
-
-import Item from "./Item";
-
+import { useContext, useEffect } from "react";
 import { ItemsContext } from "../../DataContext";
-const Main = () => {
-    const { state } = useContext(ItemsContext);
+import Item from "./Item";
+import Popup from "../Popup";
+import Notification from "../Notification";
 
+const Main = () => {
+    const { state, dispatch } = useContext(ItemsContext);
+
+    useEffect(() => {
+        let t;
+        if (state.notify) {
+            t = setTimeout(() => {
+                dispatch({ type: "NOTIFY", show: false });
+            }, 3000);
+        }
+        return () => {
+            clearTimeout(t);
+        };
+        // eslint-disable-next-line
+    }, [state.notify]);
     return (
         <div>
+            {state.notify && <Notification />}
+            {state.popup && <Popup name={"name"} />}
             <h1 className="summary-head">
                 <i className="fas fa-chevron-left"></i>
                 {" Order Summary"}
