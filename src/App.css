@@ -1,11 +1,17 @@
+:root {
+    --border: rgb(218, 216, 216);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     outline: none;
+    touch-action: manipulation;
 }
 body {
     font-family: sans-serif;
+    overflow-x: hidden;
 }
 /* -------------Main Wrapper in flex---------- */
 #main-wrapper {
@@ -15,7 +21,7 @@ body {
     padding: 20px;
 }
 
-/* Styling for the right items list */
+/****** Styling for the right items list ******/
 .summary-head {
     font-size: 24px;
     font-weight: 300;
@@ -31,12 +37,11 @@ table {
     width: 100vmin;
     text-align: left;
     margin: 10px;
-    padding: 4px;
+
     max-width: 700px;
     min-width: 380px;
     border: 2px solid rgb(230, 227, 227);
 }
-
 thead {
     background-color: rgb(160, 214, 11);
     height: 40px;
@@ -44,7 +49,6 @@ thead {
 thead .th-item {
     padding: 10px;
 }
-
 td {
     font-size: 14px;
     padding: 3px 0;
@@ -55,7 +59,11 @@ td:nth-child(3),
 thead th:nth-child(2),
 thead th:nth-child(3) {
     text-align: center;
-    width: 20%;
+    width: 25%;
+}
+thead th:nth-child(3),
+td:nth-child(3) {
+    width: 18%;
 }
 
 tbody .main-item-name {
@@ -66,13 +74,15 @@ tbody .main-item-name {
     border-radius: 4px;
     box-shadow: 0px 0px 7px -4px, -1px 0px 5px -3px;
 }
+.main-item-name:hover {
+    background-color: rgb(231, 231, 231);
+}
 tbody .main-item-name img {
     margin: 0 4px;
     width: 40px;
     height: 40px;
     background-color: rgb(168, 166, 166);
 }
-
 tbody .name {
     margin: 0 0 0 8px;
 }
@@ -83,23 +93,28 @@ tbody .name {
     cursor: pointer;
     user-select: none;
 }
+/* -------------------------------- */
 
-/* quantity part */
+/*********quantity part ***********/
 td .nos-item {
     display: inline-block;
-    width: 40px;
+    width: 30px;
     height: 40px;
     line-height: 40px;
     margin: 0 3px;
+    user-select: none;
+    pointer-events: none;
     box-shadow: inset 0 0 4px -2.5px;
 }
 .minus-item,
 .plus-item {
     cursor: pointer;
     font-size: 12px;
+    padding: 5px;
 }
+/* -------------------------------- */
 
-/* Checkout box */
+/******** Checkout box *******/
 .checkout-box {
     width: 300px;
     border: 2px solid rgba(214, 208, 208, 0.63);
@@ -131,6 +146,7 @@ td .nos-item {
     padding: 10px 18px;
     background-color: rgb(228, 224, 224);
 }
+/* ----------------------------------------- */
 
 /* ***** Custom notification styling ***** */
 #notification {
@@ -139,22 +155,15 @@ td .nos-item {
     width: 300px;
     height: 50px;
     color: #fff;
-    background-color: rgb(235, 74, 74);
+    background-color: rgb(250, 104, 104);
     position: fixed;
     top: 10px;
     right: 10px;
+    border-right: 7px solid rgb(72, 199, 72);
     text-align: center;
     line-height: 50px;
     animation: animate-toast 0.3s ease-out;
     animation-fill-mode: forwards;
-}
-@keyframes animate-toast {
-    0% {
-        transform: translate(200px);
-    }
-    100% {
-        transform: translate(0px);
-    }
 }
 /* ---------------------------------------- */
 
@@ -191,15 +200,25 @@ td .nos-item {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     z-index: 1;
     background: rgba(0, 0, 0, 0.685);
-    backdrop-filter: blur(5px);
+    transform: blur(5px);
     width: calc(100vw + 20px);
     height: calc(100vh + 20px);
 }
 /* ------------------- */
+
+/* reset button */
+#reset {
+    border: 3px solid rgb(152, 170, 250);
+    width: 100px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
+    background: rgb(89, 99, 236);
+    cursor: pointer;
+    margin: 0 0 0 10px;
+}
 
 /* ***** Media queries for responsive design **** */
 @media only screen and (max-width: 1100px) {
@@ -207,8 +226,16 @@ td .nos-item {
         flex-direction: column-reverse;
         align-items: center;
     }
+    .summary-head {
+        position: absolute;
+        top: 10px;
+        width: 700px;
+        margin: 0 auto;
+        padding: 5px 0;
+        border-bottom: 2px solid rgb(231, 220, 220);
+    }
     .checkout-box {
-        margin: 10px 0 0 10px;
+        margin: 40px 0 0 10px;
     }
 }
 @media only screen and (max-width: 768px) {
@@ -216,4 +243,19 @@ td .nos-item {
         width: 95vw;
         margin: inherit auto;
     }
+    .summary-head {
+        width: 95%;
+        left: 10px;
+    }
 }
+
+/* ******** Animation using keyframes ******** */
+@keyframes animate-toast {
+    0% {
+        transform: translate(200px);
+    }
+    100% {
+        transform: translate(0px);
+    }
+}
+/* ------------------------------------ */

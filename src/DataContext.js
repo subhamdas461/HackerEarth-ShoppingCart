@@ -1,8 +1,9 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import { data } from "./data.json";
 export const ItemsContext = createContext();
 
 const reducer = (state, { type, id, payload, show }) => {
+    // let ls = JSON.parse(localStorage.getItem("state"));
     switch (type) {
         case "INCREMENT": {
             let newAddItem = state.data.map((e) => {
@@ -11,7 +12,9 @@ const reducer = (state, { type, id, payload, show }) => {
                 }
                 return e;
             });
-            return { ...state, data: newAddItem };
+            let newState = { ...state, data: newAddItem };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
         }
         case "DECREMENT": {
             let newDecItem = state.data.map((e) => {
@@ -23,7 +26,9 @@ const reducer = (state, { type, id, payload, show }) => {
                 }
                 return e;
             });
-            return { ...state, data: newDecItem };
+            let newState = { ...state, data: newDecItem };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
         }
         case "ADD_PRICE": {
             let initSum = 0,
@@ -36,63 +41,83 @@ const reducer = (state, { type, id, payload, show }) => {
                     typeDisSum += e.price * 0.15 * e.qty;
                 }
             });
-            return {
+            let newState = {
                 ...state,
                 initialTotal: initSum,
                 priceDiscount: disSum,
                 typeDiscount: typeDisSum,
                 grandTotal: initSum - (disSum + typeDisSum),
             };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
         }
 
         case "POPUP": {
-            return {
+            let newState = {
                 ...state,
                 popup: payload.show,
                 deleteId: payload.id,
                 deleteName: payload.name,
             };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
         }
 
         case "DELETE": {
             let newList = state.data.filter((e) => {
                 return e.id !== id;
             });
-            return { ...state, data: newList, popup: false };
+            let newState = { ...state, data: newList, popup: false };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
         }
         case "NOTIFY": {
-            return { ...state, notify: show };
+            let newState = { ...state, notify: show };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
+        }
+        case "SHOW_RESET": {
+            let newState = { ...state, showReset: show };
+            localStorage.state = JSON.stringify(newState);
+            return newState;
+        }
+        case "RESET": {
+            console.log(initialState);
+            return initialState;
         }
         default:
             return state;
     }
 };
+data.map((e) => {
+    return (e["qty"] = 1);
+});
+
+let initialState = {
+    data,
+    initialTotal: 0,
+    priceDiscount: 0,
+    typeDiscount: 0,
+    grandTotal: 0,
+    popup: false,
+    deleteId: null,
+    deleteName: null,
+    notify: false,
+    showReset: false,
+};
 const DataContext = ({ children }) => {
-    data.map((e) => {
-        return (e["qty"] = 1);
-    });
-
-    const initialState = {
-        data,
-        initialTotal: 0,
-        priceDiscount: 0,
-        typeDiscount: 0,
-        grandTotal: 0,
-        popup: false,
-        deleteId: null,
-        deleteName: null,
-        notify: false,
-    };
-
-    const [state, dispatch] = useReducer(reducer, initialState);
+    useEffect(() => {
+        dispatch({ type: "NOTIFY", show: false });
+    }, []);
+    const [state, dispatch] = useReducer(
+        reducer,
+        localStorage.state !== undefined
+            ? JSON.parse(localStorage.state)
+            : initialState
+    );
 
     return (
-        <ItemsContext.Provider
-            value={{
-                state,
-                dispatch,
-            }}
-        >
+        <ItemsContext.Provider value={{ state, dispatch }}>
             {children}
         </ItemsContext.Provider>
     );

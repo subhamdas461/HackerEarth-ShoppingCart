@@ -6,13 +6,15 @@ import Notification from "../Notification";
 
 const Main = () => {
     const { state, dispatch } = useContext(ItemsContext);
-
     useEffect(() => {
         let t;
         if (state.notify) {
             t = setTimeout(() => {
                 dispatch({ type: "NOTIFY", show: false });
             }, 3000);
+        }
+        if (state.data.length === 0) {
+            dispatch({ type: "SHOW_RESET", show: true });
         }
         return () => {
             clearTimeout(t);
@@ -40,6 +42,11 @@ const Main = () => {
                     <Item />
                 </tbody>
             </table>
+            {state.showReset && (
+                <button id="reset" onClick={() => dispatch({ type: "RESET" })}>
+                    Reset Items
+                </button>
+            )}
         </div>
     );
 };
