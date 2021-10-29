@@ -8,8 +8,7 @@ const Popup = () => {
             <div className="overlay"></div>
             <div id="popup">
                 <p>
-                    Do you want to remove
-                    <b>{" " + state.deleteName}</b> ?
+                    Do you want to remove <b>{state.deleteName}</b>?
                 </p>
                 <div className="popup-btns">
                     <button

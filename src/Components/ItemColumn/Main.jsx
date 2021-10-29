@@ -24,7 +24,7 @@ const Main = () => {
     return (
         <div>
             {state.notify && <Notification />}
-            {state.popup && <Popup name={"name"} />}
+            {state.popup && <Popup />}
             <h1 className="summary-head">
                 <i className="fas fa-chevron-left"></i>
                 {" Order Summary"}

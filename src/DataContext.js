@@ -3,7 +3,6 @@ import { data } from "./data.json";
 export const ItemsContext = createContext();
 
 const reducer = (state, { type, id, payload, show }) => {
-    // let ls = JSON.parse(localStorage.getItem("state"));
     switch (type) {
         case "INCREMENT": {
             let newAddItem = state.data.map((e) => {
@@ -36,7 +35,7 @@ const reducer = (state, { type, id, payload, show }) => {
                 typeDisSum = 0;
             state.data.forEach((e) => {
                 initSum += e.price * e.qty;
-                disSum += e.discount * e.qty;
+                disSum += e.discount * (e.price / 100) * e.qty;
                 if (e.type === "fiction") {
                     typeDisSum += e.price * 0.15 * e.qty;
                 }
@@ -51,7 +50,6 @@ const reducer = (state, { type, id, payload, show }) => {
             localStorage.state = JSON.stringify(newState);
             return newState;
         }
-
         case "POPUP": {
             let newState = {
                 ...state,
@@ -62,7 +60,6 @@ const reducer = (state, { type, id, payload, show }) => {
             localStorage.state = JSON.stringify(newState);
             return newState;
         }
-
         case "DELETE": {
             let newList = state.data.filter((e) => {
                 return e.id !== id;
@@ -82,7 +79,6 @@ const reducer = (state, { type, id, payload, show }) => {
             return newState;
         }
         case "RESET": {
-            console.log(initialState);
             return initialState;
         }
         default:
@@ -105,10 +101,14 @@ let initialState = {
     notify: false,
     showReset: false,
 };
+
 const DataContext = ({ children }) => {
+    // This useffect will avoid the notification to be shown when the page is reloaded
     useEffect(() => {
         dispatch({ type: "NOTIFY", show: false });
     }, []);
+
+    // Central state for the whole application.
     const [state, dispatch] = useReducer(
         reducer,
         localStorage.state !== undefined
@@ -122,5 +122,4 @@ const DataContext = ({ children }) => {
         </ItemsContext.Provider>
     );
 };
-
 export default DataContext;

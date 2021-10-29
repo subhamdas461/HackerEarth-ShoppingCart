@@ -1,5 +1,4 @@
 import { useContext } from "react";
-
 import { ItemsContext } from "../../DataContext";
 
 const Item = () => {
